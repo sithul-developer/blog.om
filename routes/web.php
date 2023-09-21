@@ -39,5 +39,5 @@ Route::group(['prefix' => 'panel/dashboard', 'middleware' => "user_type"], funct
     Route::post('/user', [UsersController::class, 'store'])->name('user.store');
     Route::get('/user/{id}', [UsersController::class, 'destroy']);
     Route::get('/user/{id}', [UsersController::class, 'show'])->name('user.show');
-    Route::get('/user/{id}', [UsersController::class, 'show'])->name('user.show');
+  
 });
