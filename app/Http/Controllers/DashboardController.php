@@ -8,8 +8,8 @@ class DashboardController extends Controller
 {
     //
     public function index(){
-
-        return view('backend_master.dashboard');
+        $data['header_title'] = 'Dashboard |';
+        return view('backend_master.dashboard',$data);
 
     }
 }

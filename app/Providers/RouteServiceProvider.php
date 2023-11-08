@@ -24,6 +24,8 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
+
+
     public function boot()
     {
         $this->configureRateLimiting();
@@ -35,7 +37,23 @@ class RouteServiceProvider extends ServiceProvider
 
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));
+
+            Route::middleware('UserPage')
+                ->group(base_path('routes/UserPage.php'));
         });
+    }
+    public function map()
+    {
+        $this->mapUserPageRoutes();
+
+
+    }
+
+    protected function mapUserPageRoutes()
+    {
+        Route::middleware('userPage')
+             ->namespace($this->namespace)
+             ->group(base_path('routes/userPage.php'));
     }
 
     /**
