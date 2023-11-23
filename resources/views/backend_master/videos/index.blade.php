@@ -5,13 +5,12 @@
 
 
         <nav class="pb-2" style="display: flex">
-            @can('role view')
-                <a href=" {{ url('/panel/dashboard/videos/create') }}">
-                    <button type="submit" class="btn  btn-outline-secondary      btn-md mb-2  "
-                        style="font-size: 15px;"><i class="bi bi-plus-circle me-2 "
-                            onclick="this.classList.toggle('button--loading')"></i> Add Videos
-                        </button></a>
-            @endcan
+            {{--     @can('role view') --}}
+            <a href=" {{ url('/panel/dashboard/videos/create') }}">
+                <button type="submit" class="btn  btn-outline-secondary      btn-md mb-2  " style="font-size: 15px;"><i
+                        class="bi bi-plus-circle me-2 " onclick="this.classList.toggle('button--loading')"></i> Add Videos
+                </button></a>
+            {{--       @endcan --}}
 
             <form class="search-form d-flex align-items-center" method="POST" action="#"
                 style="position: absolute; right: 28px;}">
@@ -30,14 +29,14 @@
                     <div class="card">
                         <div class="card-body" style="overflow-x:auto;">
 
-                            <h5 class="card-title"> <span></span></h5>
-                            <table class="table table-borderless">
+                            <h5 class="card-title"> <span>All of Video</span></h5>
+                            <table class="table table-hover   striped">
                                 <thead>
                                     <tr>
 
                                         <th scope="col"id="col">No</th>
                                         <th scope="col"id="col">Videos</th>
-                                      {{--   <th scope="col"id="col">Course_Name</th> --}}
+                                        <th scope="col"id="col">Course_Name</th>
                                         <th scope="col"id="col">Title</th>
                                         <th scope="col"id="col">Description </th>
                                         <th scope="col"id="col">Status</th>
@@ -46,64 +45,64 @@
                                         <th scope="col"id="col">Action</th>
                                     </tr>
                                 </thead>
-                                 @foreach ($videos as $video)
+                                @foreach ($videos as $video)
                                     <tbody>
                                         <tr>
                                             <td class="col">{{ $video->id }}</td>
-                                            <td scope="row"><img src='{{ $video->getImage() }}'
-                                                    style="width: 100px;
-                                          height: 50px;"
-                                                    alt="image">
-
-                                            </td>
+                                            <td scope="row">
+                                                <iframe  width="85" height="48" style="border-radius: 5px; " src="{{ $video->videos }}" frameborder="0" allowfullscreen"></iframe>
 
 
-                                            <td class="col"
-                                                style="display: -webkit-box;
-                                      text-overflow: ellipsis;
-                                      overflow: hidden;
-                                      height: 33px;
-                                      -webkit-box-orient: vertical;
-                                      -webkit-line-clamp: 1;">
-                                                {{ $video->title }}</td>
-                                            <td class="col">{{ $video->description }}</td>
-                                            <td class="col">{{ $video->status }}</td>
-                                            <td class="col" style="display: flex">
-                                                {{ $video->created_at->format('d/M/Y') }}
-                                            </td>
-                                            <td class="col">
-                                                {{ Carbon\Carbon::parse($video->update_at)->format('d/M/Y') }}
-                                            </td>
-                                            <td class="col">
+                                                            </td>
+                                                            <td class="col" id="column">{{ $video->course->name ?? 'None' }}</td>
 
-                                                <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                                            <td class="col" style=" width:300px" id="column">
+                                                                <p class="textSort">{{ $video->title }}</p>
+                                                                </td>
 
+                                                            <td class="col" id="column">{{ $video->description }}</td>
+                                                            <td class="col" id="column">
 
-                                                    <a
-                                                        href="{{ url('/panel/dashboard/videos/edit/' . $video->id) }}"><i
-                                                            class="bi bi-pencil-square  btn btn-sm btn-outline-success btn-outline-success"></i>
-                                                    </a>
+                                                                <a href="{{ url('/panel/dashboard/video/' . $video->id) }}" <button
+                                                                    class="badge  text-white  btn btn-{{ $video->status ? 'danger' : 'primary' }}">{{ $video->status ? 'Inactive' : 'Active' }}
+                                                                    </button> </a>
+                                                            </td>
 
+                                                            <td class="col" id="column">
+                                                                {{ $video->created_at->format('d/M/Y') }}
+                                                            </td>
+                                                            <td class="col" id="column">
+                                                                {{ Carbon\Carbon::parse($video->update_at)->format('d/M/Y') }}
+                                                            </td>
+                                                            <td class="col" id="column">
+
+                                                                <div class="btn-group" role="group" aria-label="Basic outlined example">
 
 
-                                                    <button type="submit" value="{{ $video->id }}" id="btnDelete"
-                                                        class="btn btn-sm btn-outline-danger "
-                                                        style="border-radius: 5px ;margin: 0px 6px 0px 5px;" <a
-                                                        href="" value="{{ $video->id }}"></a><i
-                                                            class="bi bi-trash"></i>
-                                                    </button>
+                                                                    <a href="{{ url('/panel/dashboard/videos/edit/' . $video->id) }}"><i
+                                                                            class="bi bi-pencil-square  btn btn-sm btn-outline-success btn-outline-success"></i>
+                                                                    </a>
 
-                                                    <a
-                                                        href="{{ url('/panel/dashboard/course_category/view/' .$video->id) }}"><i
-                                                            class="bi bi-eye    btn btn-sm btn-outline-success btn-outline-success"></i>
-                                                    </a>
-                                                </div>
 
-                                            </td>
-                                        </tr>
 
-                                    </tbody>
-                                @endforeach
+                                                                    <button type="submit" value="{{ $video->id }}" id="btnDelete"
+                                                                        class="btn btn-sm btn-outline-danger "
+                                                                        style="border-radius: 5px ;margin: 0px 6px 0px 5px;" <a
+                                                                        href="" value="{{ $video->id }}"></a><i
+                                                                            class="bi bi-trash"></i>
+                                                                    </button>
+
+                                                                    <a
+                                                                        href="{{ url('/panel/dashboard/course_category/view/' . $video->id) }}"><i
+                                                                            class="bi bi-eye    btn btn-sm btn-outline-success btn-outline-success"></i>
+                                                                    </a>
+                                                                </div>
+
+                                                            </td>
+                                                        </tr>
+
+                                                    </tbody>
+     @endforeach
                             </table>
 
                             <!-- End Table with stripped rows -->
@@ -115,6 +114,12 @@
 
             </div>
         </section>
+
+
+
+
+
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
         <script>
             $(document).ready(function() {
@@ -124,19 +129,54 @@
                     $('#deleteid').val(video_id);
                 });
             });
+
+            document.getElementById('myIframe').contentDocument.designMode = 'off';
+            document.getElementById('myIframe').contentDocument.body.contentEditable = false;
         </script>
 
         <style>
-              thead{
-                 border:1px solid #f2f2f2 ;
-                  padding: 10px;
+            .textSort {
+                max-height: 42px;
+                width: 200px;
+                margin-bottom: 10px;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                -moz-line-clamp: 2;
+                -moz-box-orient: vertical;
+                color: #707070 font-size: 0.80rem;
+
             }
+            #myIframe {
+                width: 100%;
+                height: 48px;
+                /* Adjust the height as needed */
+            }
+
+            .ytp-watermark {
+                display: none !important;
+            }
+
+            #column {
+                color: #707070
+            }
+
+            thead {
+                border: 1px solid #f2f2f2;
+                padding: 10px;
+            }
+
             .col {
                 text-align: center;
+
+
+
             }
 
             #col {
-                padding: 20px
+                padding: 20px;
+                color: #565454
             }
 
             th {

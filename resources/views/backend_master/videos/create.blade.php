@@ -25,7 +25,7 @@
                                 <label for="NameCategory" class="form-label">Title<span
                                         class="text-danger ">*</span></label>
                                 <input type="text" value="{{ old('title') }}" name="title" id="title"
-                                    placeholder="Enter Title"
+                                    placeholder="Please input title"
                                     class="form-control @error('title') is-invalid @enderror has-validation " required>
                                 @if ($errors->has('title'))
                                     <div class="text-danger text-left " style="font-size:14px">
@@ -33,31 +33,15 @@
                                     </div>
                                 @endif
                             </div>
-                            <div class="col-6">
-                                <label for="NameCategory" class="form-label">Status<span
-                                        class="text-danger ">*</span></label>
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" name="status" type="checkbox" id="flexSwitchCheckDefault"
-                                      checked>
-                                    <label class="form-check-label" for="flexSwitchCheckDefault">Active</label>
 
-
-
-                                </div>
-                                @if ($errors->has('course_name'))
-                                    <div class="text-danger text-left " style="font-size:14px">
-                                        {{ $errors->first('course_name') }}
-                                    </div>
-                                @endif
-                            </div>
 
 
                             <div class="col-6">
                                 <label for="NameCategory" class="form-label">Courses Name<span
                                         class="text-danger ">*</span></label>
 
-                                <select class="form-select" name='course_name' value="{{ old('course_name') }}"
-                                    id="validationCustom04" value="{{ old('course_name') }}" required>
+                                <select class="form-select" name='course_id' value="{{ old('course_id') }}"
+                                    id="validationCustom04" value="{{ old('course_id') }}" required>
                                     <option selected="" disabled="" value="">Choose...</option>
                                     @foreach ($courses as $course)
                                         <option value="{{ $course->id }}">{{ $course->name }}</option>
@@ -72,16 +56,17 @@
 
 
                             <div class="col-6">
-                                <label for="NameCategory" class="form-label">Image<span
+                                <label for="NameCategory" class="form-label">Video_link<span
                                         class="text-danger ">*</span></label>
-                                <input type="file" value="{{ old('videos ') }}" name="videos" id="videos"
-                                    placeholder="Course Category"
+                                <input type="text" value="{{ old('videos ') }}" name="videos" id="videos"
+                                    placeholder="Please input link"
                                     class="form-control @error('videos') is-invalid @enderror has-validation "
-                                    onchange="readURL(this);" required>
-                                <div class="img_slider">
+                                    onchange="readURL(this);" >
+
+                             {{--    <div class="img_slider">
                                     <img id="blah" src="{{ asset('./media/image slider.png') }}" alt="your image"
-                                        style="width: 150p; height: 150px; position:absolute  " />
-                                </div>
+                                        style="width: 150p; height: 150px; " />
+                                </div> --}}
                                 @if ($errors->has('image'))
                                     <div class="text-danger text-left " style="font-size:14px">
                                         {{ $errors->first('image') }}
@@ -93,7 +78,7 @@
                             <div class="col-6">
                                 <label for="validationCustom04" class="form-label">Description <span
                                         class="text-danger">*</span></label>
-                                <textarea value="{{ old('description') }}" name="description" id="description" placeholder="Description"
+                                <textarea value="{{ old('description') }}" name="description" id="description" placeholder="Please input description ..."
                                     class="form-control @error('description') is-invalid @enderror has-validation " style="height: 100px" required></textarea>
 
                                 @if ($errors->has('description'))
@@ -106,7 +91,7 @@
                             <div class="modal-footer">
                                 <div class="text-left">
                                     <button type="submit" class="btn btn-secondary  btn-sm"><a
-                                            href="{{ url('panel/dashboard/course_category') }}"
+                                            href="{{ url('panel/dashboard/videos') }}"
                                             style="color:whitesmoke "><i class="bi bi-arrow-clockwise"
                                                 style="margin-right: 10px " class="spinner-border"></i>Back To Lists
                                         </a></button>

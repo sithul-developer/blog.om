@@ -19,7 +19,7 @@
       </li>
 
       <li class="nav-item">
-        <a href="{{url('/panel/dashboard/role')}}" class=" nav-link collapsed {{'panel/dashboard/role'  == request()->path() ? 'active' : ''}} ">
+        <a href="{{url('/panel/dashboard/Enrollment')}}" class=" nav-link collapsed {{'panel/dashboard/role'  == request()->path() ? 'active' : ''}} ">
             <i class="bi bi-person-badge-fill"></i> <span>Enollment</span>
           </a>
       </li>

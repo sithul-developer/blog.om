@@ -5,6 +5,7 @@ use App\Http\Controllers\Course_Cate_Controller;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CoursesController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HomeMasterController;
 use App\Http\Controllers\PermissionController;
@@ -39,7 +40,7 @@ Route::get('/logout', [AuthController::class, 'logout']);
 
 //============= This is the admin controller
 
-Route::group(['prefix' => '/panel/dashboard', 'middleware' => "user_type"], function () {
+Route::group(['prefix' => '/panel/dashboard', 'middleware' => 'auth', 'verified'], function () {
 
     Route::get('/', [DashboardController::class, 'index'])->name('user.index');
     //user
@@ -79,7 +80,7 @@ Route::group(['prefix' => '/panel/dashboard', 'middleware' => "user_type"], func
     Route::get('/courses/create', [CoursesController::class, 'create_courses'])->name('courses.create');
     Route::post('/courses/store', [CoursesController::class, 'store_courses'])->name('courses.store');
     Route::get('/courses/edit/{id}', [CoursesController::class, 'edit_courses'])->name('courses.edit');
-    Route::post('/courses/update/{id}', [CoursesController::class, 'update_courses'])->name('courses.update');
+    Route::put('/courses/update/{id}', [CoursesController::class, 'update_courses'])->name('courses.update');
     Route::delete('/courses/delete', [CoursesController::class, 'delete_courses'])->name('courses.delete');
     Route::get('/courses/{id}', [CoursesController::class, 'disable']);
 
@@ -87,20 +88,25 @@ Route::group(['prefix' => '/panel/dashboard', 'middleware' => "user_type"], func
     Route::get('/videos', [VideosController::class, 'index_videos'])->name('videos.index');
     Route::get('videos/create', [VideosController::class, 'create_videos'])->name('videos.create');
     Route::post('videos/store', [VideosController::class, 'store_videos'])->name('videos.store');
-    Route::delete('videos/delete', [VideosController::class, 'delete_videos'])->name('videos.delete');
     Route::get('/videos/edit/{id}', [VideosController::class, 'edit_videos'])->name('videos.edit');
+    Route::post('/videos/update/{id}', [VideosController::class, 'update_videos'])->name('videos.update');
+    Route::delete('videos/delete', [VideosController::class, 'delete_videos'])->name('videos.delete');
+    Route::get('/video/{id}', [VideosController::class, 'disable']);
+
+
+    //================= Enrolment  ==================
+    Route::get('/Enrollment ', [EnrollmentController ::class, 'index_Enrollment'])->name('Enrollment.index');
+
 
 
 
     //================= trash  ==================
     Route::get('/trash', [TrashController::class, 'index_Trash'])->name('trash.index');
     Route::delete('/trash/{id}', [TrashController::class, 'destroy'])->name('trash.destroy');
-   //================= destroy course  ==================
+    //================= destroy course  ==================
     Route::delete('/trashCourse/{id}', [TrashController::class, 'destroy_course'])->name('trash.destroy_course');
-
-
-
-
+    //================= destroy course  ==================
+    Route::delete('/trashVideo/{id}', [TrashController::class, 'destroy_video'])->name('trash.destroy_video');
 });
 
 //================Home_Master=====================

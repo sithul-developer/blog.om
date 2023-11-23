@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
 use App\Models\Category;
 use Illuminate\Support\Str;
 use App\Models\Courses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use League\CommonMark\Extension\CommonMark\Node\Inline\Strong;
 
 class CoursesController extends Controller
 {
@@ -15,14 +17,14 @@ class CoursesController extends Controller
     {
             //
             /* $courses = Courses::where('Is_deleted', 0)->get() */;
-                $categories = Category::where('Is_deleted', 0)->get();
+        $categories = Category::where('Is_deleted', 0)->get();
         $courses = Courses::where('Is_deleted', 0)->get();
         $data['header_title'] = ' Courses |';
         return view('backend_master.courses.index', $data, ['courses' => $courses, 'categories' => $categories]);
     }
     public function create_courses()
     {
-        $categories = Category::where('Is_deleted' ,0)->get();
+        $categories = Category::where('Is_deleted', 0)->get();
         $data['header_title'] = 'Create User  |';
         return view('backend_master.courses.create',  $data, ['categories' => $categories]);
     }
@@ -37,6 +39,7 @@ class CoursesController extends Controller
                 'description' => 'required',
                 'prices' => 'required',
                 'name' => 'required',
+                'image' => 'required',
             ]);
 
             $courses = new Courses();
@@ -50,12 +53,10 @@ class CoursesController extends Controller
 
 
             if (!empty($request->file('image'))) {
-                $ext = $request->file('image')->getClientOriginalExtension();
-                $file = $request->file('image');
-                $randomStr = Str::random(20);
-                $filename = strtolower($randomStr) . '.' . $ext;
-                $file->move('media/', $filename);
-                $courses->image = $filename;
+                $image = $request->file('image');
+                $filename = $image->getClientOriginalName();
+                $image->storeAs('/public/media/', $filename);
+                $courses->image = $request->file('image')->getClientOriginalName();
             }
 
             $courses->save();
@@ -69,33 +70,65 @@ class CoursesController extends Controller
         }
     }
 
-    public function edit_courses( $id)
+    public function edit_courses($id)
     {
         $categories = Category::all();
         $courses = Courses::find($id);
         $data['header_title'] = 'Edit |';
-        return view('backend_master.courses.edit', $data, ['courses'=>$courses , 'categories'=>$categories]);
+        return view('backend_master.courses.edit', $data, ['courses' => $courses, 'categories' => $categories]);
     }
     public function update_courses(Request $request, $id)
     {
         //update
         DB::beginTransaction();
         try {
+            $request->validate([
+                'title' => 'required|max:191',
+                'description' => 'required|max:191',
+                'prices' => 'required|nullable|numeric',
+                'name' => 'required|nullable|string',
+
+            ]);
+
             $courses = Courses::findOrFail($id);
             $courses->title = $request->input('title');
             $courses->description = $request->input('description');
             $courses->prices = $request->input('prices');
             $courses->name = $request->input('name');
             $courses->category_id = $request->input('category_id');
-            if (!empty($request->file('image'))) {
+
+            /*   if (!empty($request->file('image'))) {
                 $ext = $request->file('image')->getClientOriginalExtension();
                 $file = $request->file('image');
                 $randomStr = Str::random(20);
                 $filename = strtolower($randomStr) . '.' . $ext;
                 $file->move('media/', $filename);
                 $courses->image = $filename;
+            } */
+            /*
+            if (!empty($request->file('image'))) {
+
+                $ext = $request->file('image')->getClientOriginalExtension();
+                $file = $request->file('image');
+                $randomStr = Str::random(20);
+                $filename = strtolower($randomStr) . '.' . $ext;
+                $file->move('media/', $filename);
+                $courses->image = $filename;
+            } */
+
+
+            if ($request->has('image')) {
+                if ($courses->image) {
+                    Storage::delete('/public/media/' . $courses->image);
+                }
+                $image = $request->file('image');
+                $filename = $image->getClientOriginalName();
+                $image->storeAs('/public/media/', $filename);
+                $courses->image = $request->file('image')->getClientOriginalName();
             }
             $courses->save();
+
+            /*     dd($request->all()); */
             DB::commit();
             return redirect('/panel/dashboard/courses')->with('success', "User added successfully!");
         } catch (\Exception $e) {

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string ('title');
             $table->string ('description');
             $table->string ('prices');
+            $table->string ('category_id')->nullable();
             $table->string ('name');
             $table->tinyInteger('status')->comment('0:active,1:inactive')->default(0);
             $table->tinyInteger('Is_deleted')->comment('0:not delete,1:delete')->default(0);

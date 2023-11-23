@@ -14,113 +14,21 @@
                 </div>
             </form>
         </nav>
-        <section class="section">
-            <div class="row">
-                <div class="col-lg-12">
-                        {{-- ===================================== Trash of Category ============================ --}}
-                    <div class="card">
-                        <div class="card-body" style="overflow-x:auto;">
-                            <h5 class="card-title"> <span>Trash of Category </span></h5>
-                            <table class="table table-borderless">
-                                <thead>
-                                    <tr>
-                                        <th scope="col"id="col">No</th>
-                                        <th scope="col"id="col">Name</th>
-                                        <th scope="col"id="col">Create_at</th>
-                                        <th scope="col"id="col">Update_at</th>
-                                        <th scope="col"id="col">Action</th>
-                                    </tr>
-                                </thead>
-                                @foreach ($category as $item)
-                                    <tbody>
-                                        <tr>
-                                            <td class="col">{{ $item->id }}</td>
-                                            <td class="col">{{ $item->name }}</td>
-                                            <td class="col" style="display: flex">
-                                                {{ $item->created_at->format('d/M/Y') }}
-                                            </td>
-                                            <td class="col">
-                                                {{ Carbon\Carbon::parse($item->update_at)->format('d/M/Y') }}
-                                            </td>
-                                            <td class="col">
-                                                <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                                    {{--   <button type="submit" value="{{ $item->id }}" id="btnDelete"
-                                                        class="btn btn-sm btn-outline-danger "
-                                                        style="border-radius: 5px ;margin: 0px 6px 0px 5px;" <a
-                                                        href="" value="{{ $item->id }}"></a><i
-                                                            class="bi bi-trash"></i>
-                                                    </button> --}}
 
-                                                    <form method="POST"
-                                                        action="{{ route('trash.destroy', ['id' => $item->id]) }}">
-                                                        @method('DELETE')
-                                                        @csrf
-                                                        <button class="btn btn-danger btn-sm" role="button"
-                                                            type="submit">Delete</button>
-                                                    </form>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                @endforeach
-                            </table>
-                            @include('backend_master.course_cate.modal')
-                        </div>
-                    </div>
-                    {{-- ===================================== Trash of Courese ============================ --}}
-                    <div class="card">
-                        <div class="card-body" style="overflow-x:auto;">
+        <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Default Accordion</h5>
 
-                            <h5 class="card-title"> <span>Trash of Courese </span></h5>
-                            <table class="table table-borderless">
-                                <thead>
-                                    <tr>
-                                        <th scope="col"id="col">No</th>
-                                        <th scope="col"id="col">Name</th>
-                                        <th scope="col"id="col">Create_at</th>
-                                        <th scope="col"id="col">Update_at</th>
-                                        <th scope="col"id="col">Action</th>
-                                    </tr>
-                                </thead>
-                                @foreach ($courses as $item)
-                                    <tbody>
-                                        <tr>
-                                            <td class="col">{{ $item->id }}</td>
-                                            <td class="col">{{ $item->name }}</td>
-                                            <td class="col" style="display: flex">
-                                                {{ $item->created_at->format('d/M/Y') }}
-                                            </td>
-                                            <td class="col">
-                                                {{ Carbon\Carbon::parse($item->update_at)->format('d/M/Y') }}
-                                            </td>
-                                            <td class="col">
-                                                <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                                    {{--   <button type="submit" value="{{ $item->id }}" id="btnDelete"
-                                                        class="btn btn-sm btn-outline-danger "
-                                                        style="border-radius: 5px ;margin: 0px 6px 0px 5px;" <a
-                                                        href="" value="{{ $item->id }}"></a><i
-                                                            class="bi bi-trash"></i>
-                                                    </button> --}}
-
-                                                    <form method="POST"
-                                                        action="{{ route('trash.destroy', ['id' => $item->id]) }}">
-                                                        @method('DELETE')
-                                                        @csrf
-                                                        <button class="btn btn-danger btn-sm" role="button"
-                                                            type="submit">Delete</button>
-                                                    </form>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                @endforeach
-                            </table>
-                            <!-- End Table with stripped rows -->
-                            @include('backend_master.course_cate.modal')
-
-                        </div>
-                    </div>
-                        {{-- ===================================== Trash of Video ============================ --}}
+              <!-- Default Accordion -->
+              <div class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Trash of Video
+                    </button>
+                  </h2>
+                  <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
                         <div class="card">
                             <div class="card-body" style="overflow-x:auto;">
 
@@ -139,9 +47,9 @@
                                         <tbody>
                                             <tr>
                                                 <td class="col">{{ $item->id }}</td>
-                                                <td class="col">{{ $item->videos }}</td>
+                                                <td class="col">{{ $item->title }}</td>
 
-                                                <td class="col" style="display: flex">
+                                                <td class="col">
                                                     {{ $item->created_at->format('d/M/Y') }}
                                                 </td>
                                                 <td class="col">
@@ -150,6 +58,134 @@
                                                 <td class="col">
                                                     <div class="btn-group" role="group" aria-label="Basic outlined example">
 
+
+                                                        <form method="POST"
+                                                            action="{{ route('trash.destroy_video', ['id' => $item->id]) }}">
+                                                            @method('DELETE')
+                                                            @csrf
+                                                            <button class="btn btn-danger btn-sm" role="button"
+                                                                type="submit"><i
+                                                                class="bi bi-trash"></i> Delete</button>
+                                                        </form>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    @endforeach
+                                </table>
+
+                                @include('backend_master.course_cate.modal')
+
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Trash of Courese #2
+                    </button>
+                  </h2>
+                  <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <div class="card">
+                            <div class="card-body" style="overflow-x:auto;">
+
+                                <h5 class="card-title"> <span>Trash of Courese </span></h5>
+                                <table class="table table-borderless">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col"id="col">No</th>
+                                            <th scope="col"id="col">Name</th>
+                                            <th scope="col"id="col">Create_at</th>
+                                            <th scope="col"id="col">Update_at</th>
+                                            <th scope="col"id="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                    @foreach ($courses as $item)
+                                        <tbody>
+                                            <tr>
+                                                <td class="col">{{ $item->id }}</td>
+                                                <td class="col"> <img src="{{ $item->getImage() }}" width="50px" height="50px" alt=""></td>
+                                                <td class="col">{{ $item->name }}</td>
+                                                <td class="col" >
+                                                    {{ $item->created_at->format('d/M/Y') }}
+                                                </td>
+                                                <td class="col">
+                                                    {{ Carbon\Carbon::parse($item->update_at)->format('d/M/Y') }}
+                                                </td>
+                                                <td class="col">
+                                                    <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                                        {{--   <button type="submit" value="{{ $item->id }}" id="btnDelete"
+                                                            class="btn btn-sm btn-outline-danger "
+                                                            style="border-radius: 5px ;margin: 0px 6px 0px 5px;" <a
+                                                            href="" value="{{ $item->id }}"></a><i
+                                                                class="bi bi-trash"></i>
+                                                        </button> --}}
+
+                                                        <form method="POST"
+                                                            action="{{ route('trash.destroy_course', ['id' => $item->id]) }}">
+                                                            @method('DELETE')
+                                                            @csrf
+                                                            <button class="btn btn-danger btn-sm" role="button"
+                                                                type="submit"><i
+                                                                class="bi bi-trash"></i> Delete</button>
+                                                        </form>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    @endforeach
+                                </table>
+                                <!-- End Table with stripped rows -->
+
+
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        Trash of Category #3
+                    </button>
+                  </h2>
+                  <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <div class="card">
+                            <div class="card-body" style="overflow-x:auto;">
+                                <h5 class="card-title"> <span>Trash of Category </span></h5>
+                                <table class="table table-borderless">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col"id="col">No</th>
+                                            <th scope="col"id="col">Name</th>
+                                            <th scope="col"id="col">Create_at</th>
+                                            <th scope="col"id="col">Update_at</th>
+                                            <th scope="col"id="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                    @foreach ($category as $item)
+                                        <tbody>
+                                            <tr>
+                                                <td class="col">{{ $item->id }}</td>
+                                                <td class="col">{{ $item->name }}</td>
+                                                <td class="col" style="display: flex">
+                                                    {{ $item->created_at->format('d/M/Y') }}
+                                                </td>
+                                                <td class="col">
+                                                    {{ Carbon\Carbon::parse($item->update_at)->format('d/M/Y') }}
+                                                </td>
+                                                <td class="col">
+                                                    <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                                        {{--   <button type="submit" value="{{ $item->id }}" id="btnDelete"
+                                                            class="btn btn-sm btn-outline-danger "
+                                                            style="border-radius: 5px ;margin: 0px 6px 0px 5px;" <a
+                                                            href="" value="{{ $item->id }}"></a><i
+                                                                class="bi bi-trash"></i>
+                                                        </button> --}}
 
                                                         <form method="POST"
                                                             action="{{ route('trash.destroy', ['id' => $item->id]) }}">
@@ -164,15 +200,17 @@
                                         </tbody>
                                     @endforeach
                                 </table>
-
                                 @include('backend_master.course_cate.modal')
-
                             </div>
                         </div>
+                    </div>
+                  </div>
                 </div>
+              </div><!-- End Default Accordion Example -->
 
             </div>
-        </section>
+          </div>
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
         <script>
             $(document).ready(function() {

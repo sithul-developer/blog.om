@@ -13,15 +13,15 @@
             </nav>
         </div> --}}
         <nav class="pb-2" style="display: flex">
-            @can('role view')
+          {{--   @can('role view') --}}
                 <a href=" {{ url('/panel/dashboard/course_category/create') }}">
                     <button type="submit" class="btn  btn-outline-secondary      btn-md mb-2  " style="font-size: 15px;"><i
                             class="bi bi-plus-circle me-2 " onclick="this.classList.toggle('button--loading')"></i> Add
                         Category</button>
                 </a>
-            @endcan
+        {{--     @endcan --}}
             <form class="search-form d-flex align-items-center" method="POST" action="#"
-            style="position: absolute; right: 28px;}">
+            style="position: absolute; right: 28px;">
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="Searah everthing"
                     aria-describedby="basic-addon2">

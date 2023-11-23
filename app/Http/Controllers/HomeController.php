@@ -10,7 +10,7 @@ class HomeController extends Controller
     //
     public function home_master(Request $request)
     {
-        $home_masters = Courses::all();
+        $home_masters = Courses::where("Is_deleted" , 0)->get();
         return view('home_master.home' , compact('home_masters'));
     }
 }

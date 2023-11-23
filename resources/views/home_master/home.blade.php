@@ -170,7 +170,7 @@
                                             alt="image">
                                     </div>
 
-                                    <h3 class="pt-4">{{ $home_master->course_name }}</h3>
+                                    <h3 class="pt-4">{{ $home_master->name }}</h3>
                                     <p>{{ $home_master->title }}</p>
                                     <a href="#" class="readmore stretched-link">Read more <i
                                         class="bi bi-arrow-right"></i></a>

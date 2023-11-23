@@ -2,12 +2,12 @@
 @section('content')
     <section>
         <nav class="pb-2" style="display: flex">
-            @can('role view')
-                <a href=" {{ url('/panel/dashboard/courses/create') }}">
-                    <button type="submit" class="btn  btn-outline-secondary      btn-md mb-2  " style="font-size: 15px;"><i
-                            class="bi bi-plus-circle me-2 " onclick="this.classList.toggle('button--loading')"></i> Add
-                        Courses</button></a>
-            @endcan
+            {{--         @can('role view') --}}
+            <a href=" {{ url('/panel/dashboard/courses/create') }}">
+                <button type="submit" class="btn  btn-outline-secondary      btn-md mb-2  " style="font-size: 15px;"><i
+                        class="bi bi-plus-circle me-2 " onclick="this.classList.toggle('button--loading')"></i> Add
+                    Courses</button></a>
+            {{--          @endcan --}}
 
             <form class="search-form d-flex align-items-center" method="POST" action="#"
                 style="position: absolute; right: 28px;}">
@@ -24,60 +24,66 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
+                        <h5 class="card-title" style="margin-left:20px"> <span>All of Courses </span></h5>
                         <div class="card-body" style="overflow-x:auto;">
 
-                            <h5 class="card-title"> <span>All of Courses </span></h5>
                             <table class="table  table-hover   striped ">
                                 <thead>
                                     <tr>
-
                                         <th scope="col"id="col">No</th>
                                         <th scope="col"id="col">Image</th>
-                                        <th scope="col"id="col">Course </th>
+                                        <th scope="col"id="col">Course_Name </th>
                                         <th scope="col"id="col">Title</th>
+                                        <th scope="col"id="col">Catgory</th>
                                         <th scope="col"id="col">Description </th>
                                         <th scope="col"id="col">Prices</th>
-                                         <th scope="col"id="col">Catgory</th>
                                         <th scope="col"id="col">Status</th>
                                         <th scope="col"id="col">Create_at</th>
-                                        <th scope="col"id="col">Update_at</th>
-                                        <th scope="col"id="col">Action</th>
+                                        <th scope="col"id="col" style="">Update_at</th>
+                                        <th scope="col"id="col">Create_at</th>
+                                        <th scope="col"></th>
+                                        <th colspan="4"
+                                            id="col"style="position: absolute; width: 150px; right: 0px;">
+                                            Action</th>
                                     </tr>
                                 </thead>
                                 @foreach ($courses as $course)
                                     <tbody>
                                         <tr>
                                             <td class="col" id="column">{{ $course->id }}</td>
-                                            <td scope="row" ><img
-                                                    src='{{ $course->getImage() }}'style="width: 50px; height: 50px;"
-                                                    alt="image">
+                                            <td scope="row">
+                                                <img src='{{ $course->getImage() }}' style="width: 85px; height: 48px; border-radius: 5px; "
+                                                    alt="{{ $course->image }}" />
                                             </td>
                                             <td class="col" id="column">{{ $course->name }}</td>
-                                            <td class="col"id="column"
-                                                style="display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden; width: 480px;">
-                                                {{ $course->title }}</td>
-                                            <td class="col" id="column">{{ $course->description }}</td>
+                                            <td class="col"id="column">
+                                                <p class="textSort"> {{ $course->title }}</p>
+                                            </td>
+                                            <td class="col" id="column">{{ $course->category->name ?? 'None' }}</td>
+
+                                            <td class="col" id="column">
+                                                <p class="textSort">
+                                                    {{ $course->description }} </p>
+                                            </td>
                                             <td class="col" id="column">{{ $course->prices }}</td>
-                                             <td class="col" id="column" >{{ $course->category->name ?? 'None' }}</td>
                                             <td class="col" id="column">
 
-                                                <a href="{{ url('/panel/dashboard/courses/' .$course->id) }}" <button
+                                                <a href="{{ url('/panel/dashboard/courses/' . $course->id) }}" <button
                                                     class="badge  text-white  btn btn-{{ $course->status ? 'danger' : 'primary' }}">{{ $course->status ? 'Inactive' : 'Active' }}
                                                     </button> </a>
                                             </td>
-                                            <td class="col" id="column" >
+                                            <td class="col" id="column">
                                                 {{ $course->created_at->format('d/M/Y') }}
                                             </td>
                                             <td class="col" id="column">
                                                 {{ Carbon\Carbon::parse($course->update_at)->format('d/M/Y') }}
                                             </td>
-                                            <td class="col" >
-
+                                            <td
+                                                class="col"style=" position: absolute; width: 150px; right: 0px; padding: 18px;">
                                                 <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                                    <a href="{{ url('/panel/dashboard/courses/edit/' .$course->id) }}"><i
+                                                    <a href="{{ url('/panel/dashboard/courses/edit/' . $course->id) }}"><i
                                                             class="bi bi-pencil-square  btn btn-sm btn-outline-success btn-outline-success"></i>
                                                     </a>
-
                                                     <button type="submit" value="{{ $course->id }}" id="btnDelete"
                                                         class="btn btn-sm btn-outline-danger "
                                                         style="border-radius: 5px ;margin: 0px 6px 0px 5px;" <a
@@ -89,7 +95,6 @@
                                                             class="bi bi-eye    btn btn-sm btn-outline-success btn-outline-success"></i>
                                                     </a>
                                                 </div>
-
                                             </td>
                                         </tr>
 
@@ -117,9 +122,24 @@
         </script>
 
         <style>
-            #column{
+            .textSort {
+                max-height: 42px;
+                width: 200px;
+                margin-bottom: 10px;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                -moz-line-clamp: 2;
+                -moz-box-orient: vertical;
+                color: #707070 font-size: 0.80rem;
+
+            }
+
+            #column {
                 color: #707070
             }
+
             thead {
                 border: 1px solid #f2f2f2;
                 padding: 10px;
@@ -133,20 +153,21 @@
             }
 
             #col {
-                padding: 20px;
+                padding: 18px;
                 color: #565454
-
             }
 
             th {
                 font-size: 0.80rem;
                 font-family: Krasar, sans-serif;
                 text-align: center;
+
             }
 
             td {
-                font-size: 0.85rem;
+                font-size: 0.80rem;
                 font-family: Krasar, sans-serif;
+
             }
 
             .form-label {
